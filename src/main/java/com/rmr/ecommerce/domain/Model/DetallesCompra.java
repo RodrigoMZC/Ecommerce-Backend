@@ -1,5 +1,7 @@
 package com.rmr.ecommerce.domain.Model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -52,19 +54,19 @@ public class DetallesCompra {
         nullable = false,
         updatable = false
     )
-    private Double precio;
+    private BigDecimal precio;
 
     @Column(
         name = "detalles_compra_subtotal",
         nullable = false,
         updatable = false
     )
-    private Double subtotal;
+    private BigDecimal subtotal;
 
     @PrePersist
     public void CalcularSubtotal() {
         if (subtotal == null && cantidad != null && precio != null) {
-            subtotal = cantidad * precio;
+            this.subtotal = precio.multiply(BigDecimal.valueOf(cantidad));
         }
     }
 }

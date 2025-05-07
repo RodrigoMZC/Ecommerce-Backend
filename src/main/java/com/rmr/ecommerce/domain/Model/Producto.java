@@ -1,6 +1,7 @@
 package com.rmr.ecommerce.domain.Model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +13,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -65,11 +68,28 @@ public class Producto {
         nullable = false,
         updatable = false
     )
-    private String fechaCreacion;
+    private LocalDateTime fechaCreacion;
+
+    @Column(
+        name = "producto_fechaActualizacion",
+        nullable = false
+    )
+    private LocalDateTime fechaActializacion;
 
     @Column(
         name = "producto_fechaActualizacion",
         nullable = false
     )
     private String fechaActualizacion;
+
+    @PrePersist
+    protected void onCreate() {
+        this.fechaCreacion = LocalDateTime.now();
+        this.fechaActializacion = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.fechaActializacion = LocalDateTime.now();
+    }
 }

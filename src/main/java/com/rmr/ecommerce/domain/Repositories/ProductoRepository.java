@@ -13,6 +13,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long>{
     List<Producto> findByNombreContainingIgnoreCase(String nombre);
     List<Producto> findByCategorias_Id(Integer id);
     //List<Producto> findByCategorias_NombreContainingIgnoreCase(String nombre);
-    boolean existByNombre(String nombre);
+    boolean existsByNombre(String nombre);
     List<Producto> findByPrecioBetween(BigDecimal minimo, BigDecimal maximo);
+    List<Producto> findByCategorias_NombreIgnoreCase(String nombre);
 }
